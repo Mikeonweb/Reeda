@@ -9,7 +9,7 @@ export default async function Home({
 }: {
   searchParams: { query?: string };
 }) {
-  const query = (searchParams).query;
+  const query = (await searchParams).query;
   
   // Fetching startups from Sanity using the sanityFetch function with live content API
   // This function is defined in the live.ts file and allows for real-time updates of content

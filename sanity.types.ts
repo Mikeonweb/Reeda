@@ -172,9 +172,10 @@ export type AllSanitySchemaTypes = Startup | Author | Markdown | SanityImagePale
 export declare const internalGroqTypeReferenceTo: unique symbol;
 // Source: ./sanity/lib/queries.ts
 // Variable: startup_query
-// Query: *[_type == "startup" && defined(slug.current)] | order(_createdAt desc) { _id, title,description,slug,_createdAt,author ->{author_id, name, image, bio},views,category,image}
+// Query: *[_type == "startup" && defined(slug.current)] | order(_createdAt desc) { _id, _type, title,description,slug,_createdAt,author ->{author_id, name, image, bio},views,category,image}
 export type Startup_queryResult = Array<{
   _id: string;
+  _type: "startup";
   title: string | null;
   description: string | null;
   slug: Slug | null;
@@ -194,6 +195,6 @@ export type Startup_queryResult = Array<{
 import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
-    "*[_type == \"startup\" && defined(slug.current)] | order(_createdAt desc) {\n _id, \ntitle,\ndescription,\nslug,\n_createdAt,\nauthor ->{author_id, name, image, bio},\nviews,\ncategory,\nimage\n}": Startup_queryResult;
+    "*[_type == \"startup\" && defined(slug.current)] | order(_createdAt desc) {\n _id,\n _type, \ntitle,\ndescription,\nslug,\n_createdAt,\nauthor ->{author_id, name, image, bio},\nviews,\ncategory,\nimage\n}": Startup_queryResult;
   }
 }
