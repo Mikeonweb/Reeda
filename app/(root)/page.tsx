@@ -1,16 +1,27 @@
 import StartupCard, { StartupCardType } from "@/components/StartupCard";
 import SearchForm from "../../components/SearchForm";
-import { client } from "@/sanity/lib/client";
+// import { client } from "@/sanity/lib/client";
 import { startup_query } from "@/sanity/lib/queries";
-import { fetchLiveData, SanityLive } from "@/sanity/lib/live";
+import { sanityFetch, SanityLive } from "@/sanity/lib/live";
 
 export default async function Home({
   searchParams,
 }: {
   searchParams: { query?: string };
 }) {
-  const query = (await searchParams).query;
-  const posts = await fetchLiveData<StartupCardType[]>(startup_query);
+  const query = (searchParams).query;
+  
+  // Fetching startups from Sanity using the sanityFetch function with live content API
+  // This function is defined in the live.ts file and allows for real-time updates of content
+  let posts: StartupCardType[] = [];
+  try {
+    const data = await sanityFetch<StartupCardType[]>(startup_query);
+    posts = data || [];
+  } catch (error) {
+    console.error("Error fetching startups:", error);
+  }
+
+  // Alternatively, doing the same using client to fetch data directly without live updates
 
   // let posts: StartupCardType[] = [];
   // try{
@@ -23,7 +34,7 @@ export default async function Home({
   return (
     <>
       <section className="relative w-full flex flex-col items-center px-8 py-10 ">
-        {/* Background Pattern */}
+        {/* Background design */}
         <div className="absolute inset-0 -z-10">
           <div className="relative h-full w-full -z-1000 [&>div]:absolute [&>div]:bottom-0 [&>div]:right-0 [&>div]:z-[-2] [&>div]:h-full [&>div]:w-full [&>div]:bg-gradient-to-b [&>div]:from-blue-200 [&>div]:to-white">
             <div></div>
