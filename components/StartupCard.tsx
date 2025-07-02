@@ -1,3 +1,5 @@
+// resuseable card component for startups
+
 import React from "react";
 import { formatDate } from "@/utils";
 import { FaEye } from "react-icons/fa";
@@ -25,6 +27,7 @@ const StartupCard = ({ post }: { post: StartupCardType }) => {
 
   return (
     <li className="startup-card">
+      {/* date and views */}
       <div className="flex justify-between">
         <p className="bg-stone-200 px-2 py-1 rounded-xl">{formatDate(_createdAt.toString())}</p>
         {/* <p className="bg-gray-300 px-2 py-1 rounded-xl">{_updatedAt}</p> */}
@@ -34,7 +37,8 @@ const StartupCard = ({ post }: { post: StartupCardType }) => {
         </div>
       </div>
 
-      <div className="flex mt-5 gap-5">
+      {/* author, title, and author image */}
+      <div className="flex items-center mt-5 gap-5">
         <div className="flex-1">
           <Link href={`/user/${author?._id}`}>
             <p className="line-clamp-1">{author?.name}</p>
@@ -52,12 +56,14 @@ const StartupCard = ({ post }: { post: StartupCardType }) => {
           />
         </Link>
       </div>
-
+      
+      {/* description and image */}
       <Link href={`/user/${_id}`}>
-        <p className="">{description}</p>
+        <p className="mt-8">{description}</p>
         <img src={image} alt="placeholder" className="rounded" />
       </Link>
 
+      {/* category and details button */}
       <div className="flex justify-between items-center gap-3 mt-5">
         <Link href={`/?query=${category?.toLocaleLowerCase()}`}>
         <p className="font-bold bg-gray-300 px-2 py-1 rounded-xl">{category}</p>

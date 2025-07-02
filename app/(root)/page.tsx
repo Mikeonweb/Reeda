@@ -10,12 +10,42 @@ export default async function Home({
   searchParams: { query?: string };
 }) {
   const query = (await searchParams).query;
+  // params variable below is used to pass the search query to the Sanity fetch function
+  // It is an object that contains the search term if provided, or null if not
+  //params variabale is passed as a second key and value pair to the sanityFetch function, check fetch function to see how it is used
+  const params = { search: query || null };
+
+  // The query parameter is used to filter startups based on the search term
+  // If no query is provided, it will fetch all startups
+  // This allows for dynamic searching of startups based on user input
+
+  // The startup_query is defined in the queries file and is used to fetch startups from Sanity
+  // It includes filtering based on the search term if provided
+  // This query is used to retrieve the data for the StartupCard components
+
+  // The sanityFetch function is used to fetch data from Sanity with live updates
+  // It allows for real-time updates of content without needing to refresh the page
+
+  // The posts variable will hold the fetched startups data
+  // It is initialized as an empty array and will be populated with the fetched data
+  // If an error occurs during fetching, it will log the error to the console
+
+  // Importing the necessary types and components
+  // StartupCardType is used to define the type of the startup data being fetched
+  // SearchForm is a component that allows users to search for startups based on a query
+
+  // The Home component is the main entry point for the page
+  // It fetches startups from Sanity and displays them in a grid format
+  // It also includes a search form for filtering startups based on user input
+
+  // The searchParams object contains the query parameter from the URL
+  // This allows the page to dynamically update based on user input in the search form
   
   // Fetching startups from Sanity using the sanityFetch function with live content API
   // This function is defined in the live.ts file and allows for real-time updates of content
   let posts: StartupCardType[] = [];
   try {
-    const data = await sanityFetch<StartupCardType[]>(startup_query);
+    const data = await sanityFetch<StartupCardType[]>(startup_query, params);
     posts = data || [];
   } catch (error) {
     console.error("Error fetching startups:", error);
